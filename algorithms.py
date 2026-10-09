@@ -131,7 +131,7 @@ def q88_mul(a, b):
     return from_q88(result_q)
 
 def binary_div(dividend, divisor, bits=16):
-    """Делит dividend на divisor, полностью имитируя поведение Python"""
+    """Делит dividend на divisor математически (округление к нулю) [5]"""
     if divisor == 0:
         raise ValueError("Деление на ноль")
     
@@ -148,28 +148,15 @@ def binary_div(dividend, divisor, bits=16):
             r_abs -= b
             q_abs |= (1 << i)
     
-    # 2. Адаптируем результат под правила Python:
-    # В Python остаток всегда имеет тот же знак, что и ДЕЛИТЕЛЬ (divisor)
+    # 2. Математическое поведение (округление к нулю)
+    # Знак частного: минус, если знаки делимого и делителя разные
+    negative_q = (dividend < 0) != (divisor < 0)
+    q = -q_abs if (negative_q and q_abs != 0) else q_abs
     
-    # Если знаки разные и есть остаток, корректируем по правилам Python
-    if (dividend < 0) != (divisor < 0) and r_abs != 0:
-        q_abs += 1
-        r_abs = b - r_abs
+    # Знак остатка: всегда совпадает со знаком делимого
+    negative_r = dividend < 0
+    r = -r_abs if (negative_r and r_abs != 0) else r_abs
     
-    # 3. Расставляем правильные знаки
-    if dividend < 0 and divisor > 0:
-        q = -q_abs
-        r = r_abs
-    elif dividend > 0 and divisor < 0:
-        q = -q_abs
-        r = -r_abs
-    elif dividend < 0 and divisor < 0:
-        q = q_abs
-        r = -r_abs
-    else:  # оба положительные
-        q = q_abs
-        r = r_abs
-        
     return q, r
 
 def q88_div(a, b):
