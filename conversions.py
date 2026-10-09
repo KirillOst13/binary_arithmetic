@@ -74,3 +74,4 @@ def from_q88(q):
         q = q - (1 << 16)
     
     return q / 256.0
+
