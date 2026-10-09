@@ -1,4 +1,4 @@
-def binary_div_restoring_1(dividend, divisor, bits=16):
+def binary_div_restoring_4(dividend, divisor, bits=16):
     """Классическое восстанавливающее деление с подсчётом операций"""
     if divisor == 0:
         raise ValueError("Деление на ноль")
@@ -46,7 +46,7 @@ def binary_div_restoring_1(dividend, divisor, bits=16):
     
     return q, r, operations
 
-def binary_div_1(dividend, divisor, bits=16):
+def binary_div_4(dividend, divisor, bits=16):
     """Безвосстанавливающее деление с подсчётом операций"""
     if divisor == 0:
         raise ValueError("Деление на ноль")
