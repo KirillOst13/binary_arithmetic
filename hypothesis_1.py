@@ -16,9 +16,14 @@ from algorithms import (
     q88_mul,
     q88_div
 )
-from for_hypothesis_4 import(
-    binary_div_restoring_1,
+
+from for_hypothesis_1 import(
     binary_div_1
+)
+
+from for_hypothesis_4 import(
+    binary_div_restoring_4,
+    binary_div_4
 )
 
 def test_hypothesis_1():
@@ -62,7 +67,7 @@ def test_hypothesis_1():
         # --- ДЕЛЕНИЕ ---
         expected_q = a // b  
         expected_r = a % b
-        actual_q, actual_r = binary_div(a, b)
+        actual_q, actual_r = binary_div_1(a, b)
         
         if actual_q == expected_q and actual_r == expected_r:
             div_ok += 1
@@ -245,8 +250,8 @@ def test_hypothesis_4():
         divisor = random.randint(1, 100)
         
         # Запускаем оба алгоритма
-        q_r, r_r, ops_r = binary_div_restoring_1(dividend, divisor)
-        q_nr, r_nr, ops_nr = binary_div_1(dividend, divisor)
+        q_r, r_r, ops_r = binary_div_restoring_4(dividend, divisor)
+        q_nr, r_nr, ops_nr = binary_div_4(dividend, divisor)
         
         total_restoring_ops += ops_r
         total_nonrestoring_ops += ops_nr
